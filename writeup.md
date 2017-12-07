@@ -1,33 +1,22 @@
-# **Behavioral Cloning** 
+# **Behavioral Cloning**
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Behavioral Cloning Project**
-
-The goals / steps of this project are the following:
+The goals / steps of this project were the following:
 * Use the simulator to collect data of good driving behavior
 * Build, a convolution neural network in Keras that predicts steering angles from images
 * Train and validate the model with a training and validation set
 * Test that the model successfully drives around track one without leaving the road
-* Summarize the results with a written report
+* Summarize the results in this file
 
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./figures/cropped_images.png "Visualizing cropped images"
+[image2]: ./figures/original_and_cropped.png "Visualizing original and cropped images"
+[image3]: ./figures/model_architecture.png "Model"
+[image4]: ./figures/angles_histogram_original_dataset.png "original dataset histogram"
+[image5]: ./figures/angles_histogram_after_repopulating_dataset.png "re-populated dataset histogram"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+
 
 ---
 ### Files Submitted & Code Quality
@@ -38,17 +27,17 @@ My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* writeup.md or writeup_report.pdf summarizing the results
+* video.mp4 (48 fps) showing my model successfully driving the simulator for two full laps without leaving the road
 
 #### 2. Submission includes functional code
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
-```sh
-python drive.py model.h5
-```
+The model provided in this repo can be used to successfully operate the simulation and complete at least two full laps without leaving the road.
 
 #### 3. Submission code is usable and readable
 
-The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The code in model.py uses a Python generator to generate data for training. 
+The model.py file contains the code for training and saving the trained model. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The model.py code is clearly organized and commented.
 
 ### Model Architecture and Training Strategy
 
