@@ -26,7 +26,7 @@ The goals / steps of this project were the following:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
-* writeup.md or writeup_report.pdf summarizing the results
+* process and resulrs are summarized herein
 * video.mp4 (48 fps) showing my model successfully driving the simulator for two full laps without leaving the road
 
 #### comments over code in this repo
