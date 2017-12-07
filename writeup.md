@@ -21,27 +21,22 @@ The goals / steps of this project were the following:
 
 
 ---
-### Files Submitted & Code Quality
 
-#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
-
-My project includes the following files:
+#### My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
 * writeup.md or writeup_report.pdf summarizing the results
 * video.mp4 (48 fps) showing my model successfully driving the simulator for two full laps without leaving the road
 
-#### 2. Submission includes functional code
+#### comments over code in this repo
 The model provided in this repo can be used to successfully operate the simulation and complete at least two full laps without leaving the road.
-
-#### 3. Submission code is usable and readable
 
 The code in model.py uses a Python generator to generate data for training. 
 The model.py file contains the code for training and saving the trained model. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 The model.py code is clearly organized and commented.
 
-### Model Architecture and Training Strategy
+### Model Architecture
 Architecture chosen similar to Nvidia proven model, with minor twiks as required. discussed further later in this doc.
 
 ![alt text][image7]
@@ -50,7 +45,7 @@ This is the layout of my final model -
 
 ![alt text][image3]
 
-#### short discussion about layer chosen -
+#### short discussion about layers chosen -
 first layer is cropping irrelevant pixels (50 pixels from top and 10 pixels from bottom), to reduce amount of parameters in the model
 second layer is regularization and mean centering the pixel data, to achieve faster more efficient training
 third layer is convolution (5 by 5 kernel) with padding and relu activation for non-linearity
@@ -78,15 +73,17 @@ It is apparent from plotting training loss and validation loss that over fitting
 #### training and validation data
 
 I have collected data from the two different simulators in order to generalize better. I have collected as many images as I could driving both tracks in both directions.
+
+The data was split for training set 85% and validation set 15%.
 number of samples in train set: 22162
 number of samples in validation set: 3912
+
+training set was shuffled to support a more efficient / smooth training.
 
 image samples were plotted to verify quality and to decide how the images should be cropped best -
 
 ![alt text][image2]
 
-The data was split for training set 85% and validation set 15%.
-training set was shuffled to support a more efficient / smooth training.
 
 plotting the histogram data based on steering angle, reveals a disturbing imbalance in the data. see below -
 
@@ -101,5 +98,5 @@ this is the distribution of the re-populated training data set -
 ![alt text][image4]
 
 
-
+No test set. model trained was tested driving the simulator.
 Very fun project. loved it.
