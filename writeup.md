@@ -32,9 +32,9 @@ The goals / steps of this project were the following:
 #### comments over code in this repo
 The model provided in this repo can be used to successfully operate the simulation and complete at least two full laps without leaving the road.
 
-The code in model.py uses a Python generator to generate data for training. 
-The model.py file contains the code for training and saving the trained model. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
-The model.py code is clearly organized and commented.
+* The code in model.py uses a Python generator to generate data for training. 
+* The model.py file contains the code for training and saving the trained model. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+* The model.py code is clearly organized and commented.
 
 ### Model Architecture
 Architecture chosen similar to Nvidia proven model, with minor twiks as required. discussed further later in this doc.
@@ -46,15 +46,15 @@ This is the layout of my final model -
 ![alt text][image3]
 
 #### short discussion about layers chosen -
-first layer is cropping irrelevant pixels (50 pixels from top and 10 pixels from bottom), to reduce amount of parameters in the model
-second layer is regularization and mean centering the pixel data, to achieve faster more efficient training
-third layer is convolution (5 by 5 kernel) with padding and relu activation for non-linearity
-forth layer is maxpool with padding, to reduce amount of parameters in the model
-fifth layer is 10% dropout, to avoid over fitting
+* first layer is cropping irrelevant pixels (50 pixels from top and 10 pixels from bottom), to reduce amount of parameters in the model
+* second layer is regularization and mean centering the pixel data, to achieve faster more efficient training
+* third layer is convolution (5 by 5 kernel) with padding and relu activation for non-linearity
+* forth layer is maxpool with padding, to reduce amount of parameters in the model
+* fifth layer is 10% dropout, to avoid over fitting
 
-layers 3-5 now repeted 3 more times (with growing capacity of neurons, as seen in the image above)
+* layers 3-5 now repeted 3 more times (with growing capacity of neurons, as seen in the image above)
 
-finally 3 fully connected layers to produc one float type output
+* finally 3 fully connected layers to produc one float type output
 
 image input samples were plotted (original input shape: (160, 320, 3), after cropping shape: (100, 320, 3)) -
 
@@ -64,7 +64,8 @@ image input samples were plotted (original input shape: (160, 320, 3), after cro
 
 The model contains 4 dropout layers (p=10%) in order to reduce overfitting
 Additionally the model was only trained for 6 EPOCHs in total, again to avoid overfitting.
-Adagrad optimizer was chosen after experimenting with different optimizers. prameters that worked best for me are as following lr=0.001, epsilon=1e-08, decay=1e-06.
+Adagrad optimizer was chosen after experimenting with different optimizers. 
+prameters that worked best for me are as following lr=0.001, epsilon=1e-08, decay=1e-06.
 
 ![alt text][image6]
 
@@ -75,6 +76,7 @@ It is apparent from plotting training loss and validation loss that over fitting
 I have collected data from the two different simulators in order to generalize better. I have collected as many images as I could driving both tracks in both directions.
 
 The data was split for training set 85% and validation set 15%.
+
 number of samples in train set: 22162
 number of samples in validation set: 3912
 
@@ -90,6 +92,7 @@ plotting the histogram data based on steering angle, reveals a disturbing imbala
 ![alt text][image4]
 
 the strong bias towards zero angle was minimized by re-populating the training data by increasing frequency of samples as much as abs(steering_angle) is bigger (validation data, unchanged!!!)
+
 initial dataset size:  22162
 total samples after re_dist: 79594
 
