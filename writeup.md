@@ -15,6 +15,8 @@ The goals / steps of this project were the following:
 [image3]: ./figures/model_architecture.png "Model"
 [image4]: ./figures/angles_histogram_original_dataset.png "original dataset histogram"
 [image5]: ./figures/angles_histogram_after_repopulating_dataset.png "re-populated dataset histogram"
+[image6]: ./figures/plot_loss_and_val.png "plot loss and val"
+[image7]: ./figures/Nvidia_model.png "Nvidia model"
 
 
 
@@ -40,79 +42,64 @@ The model.py file contains the code for training and saving the trained model. T
 The model.py code is clearly organized and commented.
 
 ### Model Architecture and Training Strategy
+Architecture chosen similar to Nvidia proven model, with minor twiks as required. discussed further later in this doc.
 
-#### 1. An appropriate model architecture has been employed
+![alt text][image7]
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+This is the layout of my final model -
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+![alt text][image3]
 
-#### 2. Attempts to reduce overfitting in the model
+#### short discussion about layer chosen -
+first layer is cropping irrelevant pixels (50 pixels from top and 10 pixels from bottom), to reduce amount of parameters in the model
+second layer is regularization and mean centering the pixel data, to achieve faster more efficient training
+third layer is convolution (5 by 5 kernel) with padding and relu activation for non-linearity
+forth layer is maxpool with padding, to reduce amount of parameters in the model
+fifth layer is 10% dropout, to avoid over fitting
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+layers 3-5 now repeted 3 more times (with growing capacity of neurons, as seen in the image above)
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+finally 3 fully connected layers to produc one float type output
 
-#### 3. Model parameter tuning
-
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
-
-#### 4. Appropriate training data
-
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
-
-For details about how I created the training data, see the next section. 
-
-### Model Architecture and Training Strategy
-
-#### 1. Solution Design Approach
-
-The overall strategy for deriving a model architecture was to ...
-
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
-
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
-
-#### 2. Final Model Architecture
-
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
-
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+image input samples were plotted (original input shape: (160, 320, 3), after cropping shape: (100, 320, 3)) -
 
 ![alt text][image1]
 
-#### 3. Creation of the Training Set & Training Process
+#### model training & means to avoid overfitting
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+The model contains 4 dropout layers (p=10%) in order to reduce overfitting
+Additionally the model was only trained for 6 EPOCHs in total, again to avoid overfitting.
+Adagrad optimizer was chosen after experimenting with different optimizers. prameters that worked best for me are as following lr=0.001, epsilon=1e-08, decay=1e-06.
+
+![alt text][image6]
+
+It is apparent from plotting training loss and validation loss that over fitting was avoided, in theory additional training may have resulted in a better model, however for lack of time and computing power I have decided to stop here and move to the next project.
+
+#### training and validation data
+
+I have collected data from the two different simulators in order to generalize better. I have collected as many images as I could driving both tracks in both directions.
+number of samples in train set: 22162
+number of samples in validation set: 3912
+
+image samples were plotted to verify quality and to decide how the images should be cropped best -
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+The data was split for training set 85% and validation set 15%.
+training set was shuffled to support a more efficient / smooth training.
 
-![alt text][image3]
+plotting the histogram data based on steering angle, reveals a disturbing imbalance in the data. see below -
+
 ![alt text][image4]
-![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
+the strong bias towards zero angle was minimized by re-populating the training data by increasing frequency of samples as much as abs(steering_angle) is bigger (validation data, unchanged!!!)
+initial dataset size:  22162
+total samples after re_dist: 79594
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+this is the distribution of the re-populated training data set -
 
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+![alt text][image4]
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+Very fun project. loved it.
