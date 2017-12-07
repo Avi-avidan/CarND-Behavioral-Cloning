@@ -98,7 +98,7 @@ total samples after re_dist: 79594
 
 this is the distribution of the re-populated training data set -
 
-![alt text][image4]
+![alt text][image5]
 
 
 No test set. model trained was tested driving the simulator.
